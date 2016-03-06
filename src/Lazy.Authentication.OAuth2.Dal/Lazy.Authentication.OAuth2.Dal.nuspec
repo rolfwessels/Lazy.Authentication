@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>Rolf Wessels</authors>
+    <owners>Rolf Wessels</owners>
+    <licenseUrl>https://github.com/rolfwessels/Lazy.Authentication/licence</licenseUrl>
+    <projectUrl>https://github.com/rolfwessels/Lazy.Authentication/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes><![CDATA[
+Version 0.0.1 2016-03-06
+------------------------
+Initial release. Contains the basics for deployment.
+        ]]></releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>oauth owin authentication authorization</tags>
+  </metadata>
+</package>

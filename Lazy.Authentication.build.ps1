@@ -36,11 +36,11 @@ properties {
 
 task default -depends build  -Description "By default it just builds"
 task clean -depends build.clean,build.cleanbin -Description "Removes build folder"
-task build -depends build.cleanbin,version,build.compile,build.publish,build.copy,build.website -Description "Cleans bin/object and builds the project placing binaries in build directory"
+task build -depends build.cleanbin,version,build.compile -Description "Cleans bin/object and builds the project placing binaries in build directory"
 task test -depends build,test.run  -Description "Builds and runs part cover tests"
 task full -depends test,deploy.zip -Description "Versions builds and creates distributions"
-task package -depends version,build,deploy.package -Description "Creates packages that could be user for deployments"
-task deploy -depends version,build,deploy.api,deploy.service -Description "Deploy the files to webserver using msdeploy"
+task package -depends version,build,build.nugetPackages -Description "Creates packages that could be user for deployments"
+task publish -depends publish.nuget -Description "Deploy the files to webserver using msdeploy"
 
 #
 # task depends
@@ -79,42 +79,27 @@ task version {
     (gc  $commonAssemblyInfo )  -replace $regEx, $replace |sc $commonAssemblyInfo
 }
 
-task build.copy {
-    'Copy the console'
-    $fromFolder =  Join-Path $srcDirectory (Join-Path 'Lazy.Authentication.Console' (srcBinFolder) )
-    $toFolder =  Join-Path (buildConfigDirectory) 'Lazy.Authentication.Console'
-    copy-files $fromFolder $toFolder
-}
-
-task build.website {
-
-    if(!(Test-Path -Path (Join-Path $srcDirectory 'node_modules'))) {
-        'Npm install'
-        pushd $srcDirectory
-        npm install
-        popd
-    }
-    if(!(Test-Path -Path (Join-Path $srcDirectory 'node_modules'))) {
-        pushd (Join-Path $srcDirectory 'Lazy.Authentication.Website/bower_components')
-        'Bower install'
-        bower install
-        popd
-    }
-    pushd $srcDirectory
-    $toFolder =  Join-Path '../' (Join-Path (buildConfigDirectory) 'Lazy.Authentication.Api/static')
-    gulp build --output $toFolder
-    popd
-}
-
-task build.publish {
-    $toFolder = Join-Path ( Join-Path (resolve-path .)(buildConfigDirectory)) 'Lazy.Authentication.Api'
-    $project = Join-Path $srcDirectory 'Lazy.Authentication.Api\Lazy.Authentication.Api.csproj'
-    $publishProfile = "Publish - $buildConfiguration.pubxml";
-    msbuild  $project /p:DeployOnBuild=true /p:publishurl=$toFolder /p:VisualStudioVersion=$vsVersion /p:DefineConstants=$buildContants /p:Configuration=$buildConfiguration /p:PublishProfile=$publishProfile /p:VisualStudioVersion=$vsVersion /v:q
-}
-
 task nuget.restore {
     ./src/.nuget/NuGet.exe install src\.nuget\packages.config -OutputDirectory lib
+}
+
+#-depend build
+task build.nugetPackages  {
+    $packagesFolder =  $buildDistDirectory
+    mkdir $packagesFolder -ErrorAction SilentlyContinue
+    ./src/.nuget/NuGet.exe pack src\Lazy.Authentication.OAuth2\Lazy.Authentication.OAuth2.csproj -Prop Configuration=$buildConfiguration
+    copy src\Lazy.Authentication.OAuth2\Lazy.Authentication.OAuth2.nuspec src\Lazy.Authentication.OAuth2.Dal\Lazy.Authentication.OAuth2.Dal.nuspec
+    ./src/.nuget/NuGet.exe pack src\Lazy.Authentication.OAuth2.Dal\Lazy.Authentication.OAuth2.Dal.csproj -Prop Configuration=$buildConfiguration
+    Move-Item -force *.nupkg $packagesFolder
+ }
+ 
+ 
+task publish.nuget {
+    $packagesFolder =  $buildDistDirectory
+    mkdir $packagesFolder -ErrorAction SilentlyContinue
+
+   ./src/.nuget/NuGet.exe push  ( Join-Path $packagesFolder ('Lazy.Authentication.OAuth2.'+(fullversionrev)+'.nupkg'))
+   ./src/.nuget/NuGet.exe push  ( Join-Path $packagesFolder ('Lazy.Authentication.OAuth2.Dal.'+(fullversionrev)+'.nupkg'))
 }
 
 task clean.database {
@@ -258,6 +243,8 @@ function srcBinFolder() {
 function buildConfigDirectory() {
     Join-Path $buildDirectory $buildConfiguration
 }
+
+
 
 function global:copy-files($source,$destination,$include=@(),$exclude=@()){
     $sourceFullName = resolve-path $source

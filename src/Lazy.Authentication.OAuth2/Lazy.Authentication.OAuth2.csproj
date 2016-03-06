@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{f6520aa3-55d6-4179-beb1-0e3c2e7be9e3}</ProjectGuid>
+    <ProjectGuid>{F6520AA3-55D6-4179-BEB1-0E3C2E7BE9E3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Lazy.Authentication.OAuth2</RootNamespace>
@@ -81,6 +81,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Lazy.Authentication.Core\Properties\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AuthorizationServerProvider.cs" />
     <Compile Include="AuthorizationSettings.cs" />
     <Compile Include="OathAuthorizationSetup.cs" />
