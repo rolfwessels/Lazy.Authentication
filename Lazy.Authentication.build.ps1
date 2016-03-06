@@ -276,6 +276,7 @@ function WriteDocumentation() {
         $defaultTaskDependencies = @()
     }
 
+
     $docs = $currentContext.tasks.Keys | foreach-object {
         if ($_ -eq "default" -or $_ -eq "?") {
             return
@@ -305,7 +306,7 @@ function WriteDocumentation() {
     'go build -properties @{''buildConfiguration''=''Qa''}'
      ''
     'Package to nuget:'
-    'go build -properties @{''buildConfiguration''=''Release''}'
+    'go package -properties @{''buildConfiguration''=''Release''}'
     ''
     'Staging deploy to sepecified folder:'
     'go deploy -properties @{buildConfiguration=''Staging'';deployServiceDest =''computerName=''''xxxx'''',userName=''''xxx'''',password=''''xxxx'''',includeAcls=''''False'''',tempAgent=''''false'''',dirPath=''''d:\server\temp'''''' }'

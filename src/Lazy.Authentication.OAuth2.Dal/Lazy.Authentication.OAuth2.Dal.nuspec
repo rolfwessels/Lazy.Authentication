@@ -6,7 +6,7 @@
     <title>$title$</title>
     <authors>Rolf Wessels</authors>
     <owners>Rolf Wessels</owners>
-    <licenseUrl>https://github.com/rolfwessels/Lazy.Authentication/licence</licenseUrl>
+    <licenseUrl>https://github.com/rolfwessels/Lazy.Authentication/blob/master/licence.txt</licenseUrl>
     <projectUrl>https://github.com/rolfwessels/Lazy.Authentication/</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>

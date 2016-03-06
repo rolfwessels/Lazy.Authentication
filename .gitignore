@@ -22,3 +22,4 @@ src/_NCrunch_Lazy.Authentication/
 **/_NCrunch*
 **/nCrunchTemp*
 **/Lazy.Authentication.Website/build/**
+/PublishToNuget.bat
