@@ -60,7 +60,6 @@
     <Compile Include="..\Lazy.Authentication.Core\Properties\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Class1.cs" />
     <Compile Include="DefaultValues\DefaultAuthUser.cs" />
     <Compile Include="DefaultValues\DefaultIoAuthClient.cs" />
     <Compile Include="DefaultValues\DefaultRefreshToken.cs" />
@@ -73,6 +72,9 @@
     <Compile Include="Interfaces\IRefreshToken.cs" />
     <Compile Include="Interfaces\IRefreshTokenManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Lazy.Authentication.OAuth2.Dal.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

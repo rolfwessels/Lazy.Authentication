@@ -3,7 +3,7 @@ using Lazy.Authentication.Dal.Models;
 
 namespace Lazy.Authentication.Dal.Persistance
 {
-	public interface IGeneralUnitOfWork : IDisposable
+	public interface IGeneralUnitOfWork
 	{
 		IRepository<User> Users { get;  }
 		IRepository<Application> Applications { get; }

@@ -17,5 +17,9 @@ Initial release. Contains the basics for deployment.
         ]]></releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>oauth owin authentication authorization</tags>
+      <dependencies>
+          <dependency id="Lazy.Authentication.OAuth2.dal" version="0.0.1.0" />
+      </dependencies>
   </metadata>
+    
 </package>

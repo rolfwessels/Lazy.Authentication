@@ -83,12 +83,12 @@ task nuget.restore {
     ./src/.nuget/NuGet.exe install src\.nuget\packages.config -OutputDirectory lib
 }
 
-#-depend build
-task build.nugetPackages  {
+#-depend build 
+task build.nugetPackages {
     $packagesFolder =  $buildDistDirectory
     mkdir $packagesFolder -ErrorAction SilentlyContinue
     ./src/.nuget/NuGet.exe pack src\Lazy.Authentication.OAuth2\Lazy.Authentication.OAuth2.csproj -Prop Configuration=$buildConfiguration
-    copy src\Lazy.Authentication.OAuth2\Lazy.Authentication.OAuth2.nuspec src\Lazy.Authentication.OAuth2.Dal\Lazy.Authentication.OAuth2.Dal.nuspec
+    #copy src\Lazy.Authentication.OAuth2\Lazy.Authentication.OAuth2.nuspec src\Lazy.Authentication.OAuth2.Dal\Lazy.Authentication.OAuth2.Dal.nuspec
     ./src/.nuget/NuGet.exe pack src\Lazy.Authentication.OAuth2.Dal\Lazy.Authentication.OAuth2.Dal.csproj -Prop Configuration=$buildConfiguration
     Move-Item -force *.nupkg $packagesFolder
  }
@@ -303,6 +303,9 @@ function WriteDocumentation() {
     ''
     'Qa build:'
     'go build -properties @{''buildConfiguration''=''Qa''}'
+     ''
+    'Package to nuget:'
+    'go build -properties @{''buildConfiguration''=''Release''}'
     ''
     'Staging deploy to sepecified folder:'
     'go deploy -properties @{buildConfiguration=''Staging'';deployServiceDest =''computerName=''''xxxx'''',userName=''''xxx'''',password=''''xxxx'''',includeAcls=''''False'''',tempAgent=''''false'''',dirPath=''''d:\server\temp'''''' }'

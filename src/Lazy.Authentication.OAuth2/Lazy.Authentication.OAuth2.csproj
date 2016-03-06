@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Lazy.Authentication.OAuth2.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -18,15 +18,6 @@ namespace Lazy.Authentication.Dal.Persistance
             Projects = new FakeRepository<Project>();
         }
 
-
-        #region Implementation of IDisposable
-
-        public void Dispose()
-        {
-        }
-
-        #endregion
-
         #region Implementation of IGeneralUnitOfWork
 
         public IRepository<User> Users { get; private set; }
